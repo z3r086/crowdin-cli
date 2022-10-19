@@ -26,6 +26,7 @@ import static com.crowdin.cli.properties.PropertiesBuilder.MULTILINGUAL_SPREADSH
 import static com.crowdin.cli.properties.PropertiesBuilder.SCHEME;
 import static com.crowdin.cli.properties.PropertiesBuilder.SKIP_UNTRANSLATED_FILES;
 import static com.crowdin.cli.properties.PropertiesBuilder.SKIP_UNTRANSLATED_STRINGS;
+import static com.crowdin.cli.properties.PropertiesBuilder.EXPORT_STRINGS_THAT_PASSED_WORKFLOW;
 import static com.crowdin.cli.properties.PropertiesBuilder.SOURCE;
 import static com.crowdin.cli.properties.PropertiesBuilder.TRANSLATABLE_ELEMENTS;
 import static com.crowdin.cli.properties.PropertiesBuilder.TRANSLATE_ATTRIBUTES;
@@ -34,6 +35,7 @@ import static com.crowdin.cli.properties.PropertiesBuilder.TRANSLATION;
 import static com.crowdin.cli.properties.PropertiesBuilder.TRANSLATION_REPLACE;
 import static com.crowdin.cli.properties.PropertiesBuilder.TYPE;
 import static com.crowdin.cli.properties.PropertiesBuilder.UPDATE_OPTION;
+import static com.crowdin.cli.properties.PropertiesBuilder.IMPORT_TRANSLATIONS;
 import static com.crowdin.cli.properties.PropertiesBuilder.checkForDoubleAsterisks;
 import static com.crowdin.cli.properties.PropertiesBuilder.hasRelativePaths;
 
@@ -62,9 +64,11 @@ public class FileBean {
     private Boolean skipTranslatedOnly;
     private Boolean skipUntranslatedFiles;
     private Boolean exportApprovedOnly;
+    private Boolean exportStringsThatPassedWorkflow;
     private List<String> labels;
     private List<String> excludedTargetLanguages;
     private String customSegmentation;
+    private Boolean importTranslations;
 
     static class FileBeanConfigurator implements BeanConfigurator<FileBean> {
 
@@ -95,9 +99,11 @@ public class FileBean {
             PropertiesBuilder.setBooleanPropertyIfExists(fileBean::setSkipTranslatedOnly,   map, SKIP_UNTRANSLATED_STRINGS);
             PropertiesBuilder.setBooleanPropertyIfExists(fileBean::setSkipUntranslatedFiles,     map, SKIP_UNTRANSLATED_FILES);
             PropertiesBuilder.setBooleanPropertyIfExists(fileBean::setExportApprovedOnly,        map, EXPORT_APPROVED_ONLY);
+            PropertiesBuilder.setBooleanPropertyIfExists(fileBean::setExportStringsThatPassedWorkflow, map, EXPORT_STRINGS_THAT_PASSED_WORKFLOW);
             PropertiesBuilder.setPropertyIfExists(fileBean::setLabels,                    map, LABELS, List.class);
             PropertiesBuilder.setPropertyIfExists(fileBean::setExcludedTargetLanguages,   map, EXCLUDED_TARGET_LANGUAGES, List.class);
             PropertiesBuilder.setPropertyIfExists(fileBean::setCustomSegmentation,        map, CUSTOM_SEGMENTATION, String.class);
+            PropertiesBuilder.setBooleanPropertyIfExists(fileBean::setImportTranslations, map, IMPORT_TRANSLATIONS);
             return fileBean;
         }
 
@@ -148,6 +154,10 @@ public class FileBean {
             }
             if (bean.getCustomSegmentation() != null) {
                 bean.setCustomSegmentation(Utils.normalizePath(bean.getCustomSegmentation()));
+            }
+
+            if (bean.getImportTranslations() == null) {
+                bean.setImportTranslations(Boolean.FALSE);
             }
         }
 

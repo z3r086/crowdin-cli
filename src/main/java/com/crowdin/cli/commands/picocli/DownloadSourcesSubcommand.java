@@ -25,8 +25,14 @@ public class DownloadSourcesSubcommand extends ActCommandWithFiles {
     @CommandLine.Option(names = {"-b", "--branch"}, paramLabel = "...")
     protected String branchName;
 
+    @CommandLine.Option(names = {"--reviewed"}, descriptionKey = "params.reviewedSources")
+    protected boolean reviewed;
+
+    @CommandLine.Option(names = {"--dryrun"})
+    protected boolean dryrun;
+
     @Override
     protected NewAction<PropertiesWithFiles, ProjectClient> getAction(Actions actions) {
-        return new DownloadSourcesAction(new FsFiles(), noProgress, plainView, branchName, debug);
+        return new DownloadSourcesAction(new FsFiles(), noProgress, plainView, branchName, debug, reviewed, dryrun);
     }
 }

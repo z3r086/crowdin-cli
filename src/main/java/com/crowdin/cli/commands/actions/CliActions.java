@@ -28,10 +28,10 @@ public class CliActions implements Actions {
 
     @Override
     public NewAction<PropertiesWithFiles, ProjectClient> download(
-        FilesInterface files, boolean noProgress, String languageId, boolean pseudo, String branchName,
+        FilesInterface files, boolean noProgress, List<String> languageIds, boolean pseudo, String branchName,
         boolean ignoreMatch, boolean isVerbose, boolean plainView, boolean useServerSources
     ) {
-        return new DownloadAction(files, noProgress, languageId, pseudo, branchName, ignoreMatch, isVerbose, plainView, useServerSources);
+        return new DownloadAction(files, noProgress, languageIds, pseudo, branchName, ignoreMatch, isVerbose, plainView, useServerSources);
     }
 
     @Override
@@ -72,9 +72,9 @@ public class CliActions implements Actions {
 
     @Override
     public NewAction<ProjectProperties, ProjectClient> status(
-        boolean noProgress, String branchName, String languageId, boolean isVerbose, boolean showTranslated, boolean showApproved
+        boolean noProgress, String branchName, String languageId, boolean isVerbose, boolean showTranslated, boolean showApproved, boolean failIfIncomplete
     ) {
-        return new StatusAction(noProgress, branchName, languageId, isVerbose, showTranslated, showApproved);
+        return new StatusAction(noProgress, branchName, languageId, isVerbose, showTranslated, showApproved, failIfIncomplete);
     }
 
     @Override

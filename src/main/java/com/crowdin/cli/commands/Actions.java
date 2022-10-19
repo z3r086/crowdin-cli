@@ -25,7 +25,7 @@ import java.util.Map;
 public interface Actions {
 
     NewAction<PropertiesWithFiles, ProjectClient> download(
-        FilesInterface files, boolean noProgress, String languageId, boolean pseudo, String branchName,
+        FilesInterface files, boolean noProgress, List<String> languageIds, boolean pseudo, String branchName,
         boolean ignoreMatch, boolean isVerbose, boolean plainView, boolean userServerSources
     );
 
@@ -45,7 +45,7 @@ public interface Actions {
     NewAction<ProjectProperties, ProjectClient> listLanguages(BaseCli.LanguageCode code, boolean noProgress, boolean plainView);
 
     NewAction<ProjectProperties, ProjectClient> status(
-        boolean noProgress, String branchName, String languageId, boolean isVerbose, boolean showTranslated, boolean showApproved);
+        boolean noProgress, String branchName, String languageId, boolean isVerbose, boolean showTranslated, boolean showApproved, boolean failIfIncomplete);
 
     NewAction<ProjectProperties, ProjectClient> stringAdd(
         boolean noProgress, String text, String identifier, Integer maxLength, String context, List<String> files, List<String> labelNames, Boolean hidden);
